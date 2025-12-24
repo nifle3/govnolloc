@@ -25,4 +25,31 @@ extern void *govnolloc(size_t size) {
   return result;
 }
 
-extern void poop(void *ptr);
+static void erase_trail(void) {
+  int mem_to_erase = 0;
+  struct block *cur_block;
+
+  cur_block = last_block;
+
+  while (cur_block != NULL && cur_block->is_free) {
+    mem_to_erase -= cur_block->size + sizeof(struct block);
+    cur_block = cur_block->prev;
+  }
+
+  last_block = cur_block;
+  if (mem_to_erase < 0) {
+    sbrk(mem_to_erase);
+  }
+}
+
+extern void poop(void *ptr) {
+  struct block *cur_block = NULL;
+
+  if (ptr == NULL) {
+    return;
+  }
+
+  cur_block = (struct block *)ptr - 1;
+  cur_block->is_free = true;
+  erase_trail();
+}

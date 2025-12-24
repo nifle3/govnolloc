@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "govnolloc.h"
 
@@ -22,17 +23,16 @@ int arr_test(void) {
 }
 
 void char_test(void) {
-  const char *first = (const char *)govnolloc(6 * sizeof(char));
-  first = "artem\0";
-
-  const char *second = (const char *)govnolloc(6 * sizeof(char));
-  second = "homya\0";
+  char *first = (char *)govnolloc(6);
+  strcpy(first, "artem");
+  char *second = (char *)govnolloc(6);
+  strcpy(second, "homya");
 
   printf("second %s\n", second);
   printf("first %s\n", first);
 
-  poop((void *)first);
-  poop((void *)second);
+  poop(first);
+  poop(second);
 }
 
 int main(void) {
@@ -45,6 +45,5 @@ int main(void) {
 
   printf("res: %d\n", res);
   char_test();
-
   return 0;
 }

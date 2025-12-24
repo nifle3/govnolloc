@@ -7,10 +7,9 @@ struct block {
   bool is_free;
   size_t size;
   struct block *prev;
-  struct block *next;
 };
 
-static struct block *last_block = NULL;
+struct block *last_block = NULL;
 
 extern void *govnolloc(size_t size);
 

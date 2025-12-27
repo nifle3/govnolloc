@@ -1,12 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
-#include "govnolloc.h"
 
 #define N 100
 
 int arr_test(void) {
-  int *arr = govnolloc(N * sizeof(int));
+  int *arr = malloc(N * sizeof(int));
   for (int i = 0; i < N; i++) {
     arr[i] = i * 2;
   }
@@ -17,22 +16,22 @@ int arr_test(void) {
     result += arr[i];
   }
 
-  poop(arr);
+  free(arr);
 
   return result;
 }
 
 void char_test(void) {
-  char *first = (char *)govnolloc(6);
+  char *first = (char *)malloc(6);
   strcpy(first, "artem");
-  char *second = (char *)govnolloc(6);
+  char *second = (char *)malloc(6);
   strcpy(second, "homya");
 
   printf("second %s\n", second);
   printf("first %s\n", first);
 
-  poop(first);
-  poop(second);
+  free(first);
+  free(second);
 }
 
 int main(void) {
